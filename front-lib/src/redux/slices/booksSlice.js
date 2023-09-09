@@ -1,43 +1,47 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 export const fetchBooks = createAsyncThunk(
-    "books/fetchBooksStatus",
-    async function DateBooks() {
-        const {data} = await axios.get('https://www.googleapis.com/books/v1/volumes?q='+'JavaScript'+'&key=AIzaSyCcEuUwqXkj45kBizl-5u8wflVTWDVKAFo'+'&maxResults=20')
-        return data;
+    'books/fetchBooks',
+    async ({ counter, searchValue }) => {
+        const { data } = await axios.get(
+            'https://www.googleapis.com/books/v1/volumes?q='+searchValue+'&key=AIzaSyCcEuUwqXkj45kBizl-5u8wflVTWDVKAFo'+`&maxResults=${counter}`
+        )
+        return data
     }
-);
+)
 
-const initialState = {
-    items: [],
-    status:'loading', //loading | success | error
-};
-const booksSlice = createSlice({
-    name: "book",
-    initialState,
+export const booksSLice = createSlice({
+    name: 'books',
+    initialState: {
+        books: [],
+        isLoading: false,
+        error: null,
+        counter: 10,
+        searchValue: 'javascript',
+    },
     reducers: {
-        setItems(state, action) {
-            state.items = action.payload;
+        setCounter(state) {
+            state.counter += 10
         },
+        setSearchValue(state, action) {
+            state.searchValue = action.payload;
+        }
     },
-    extraReducers: {
-        [fetchBooks.pending]: (state) => {
-            console.log("sending request");
-            state.status = 'loading'
-            state.items = [];
-        },
-        [fetchBooks.fulfilled]: (state, action) => {
-            console.log("ok", state);
-            state.items = action.payload
-            state.status = 'success'
-        },
-        [fetchBooks.rejected]: (state) => {
-            state.status = 'error'
-            state.items = [];
-        },
+    extraReducers: builder => {
+        builder
+            .addCase(fetchBooks.pending, state => {
+                state.isLoading = true
+            })
+            .addCase(fetchBooks.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.books = [action.payload]
+            })
+            .addCase(fetchBooks.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error
+                state.books = []
+            })
     },
-});
-export const { setItems } = booksSlice.actions;
-
-export default booksSlice.reducer;
+})
+export const { setCounter, setSearchValue } = booksSLice.actions
