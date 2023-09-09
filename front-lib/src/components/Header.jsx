@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import '../styles/App.css'
 import FormTextExample from './TextInput'
+
+
 const categories = [
 	'all',
 	'art',
@@ -13,6 +15,7 @@ const categories = [
 ]
 const sortings = ['relevance', 'newest']
 const Categories = () => {
+
 	const [currentCategories, setCurrentCategories] = useState('')
 	const [isClick, setIsClick] = useState(false)
 	const onClickCategories = el => {

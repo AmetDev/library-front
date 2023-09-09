@@ -1,7 +1,10 @@
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import {useState} from "react";
 
 function FormTextExample() {
+	const [inputDate, setInputDate] = useState('');
+	console.log(inputDate)
 	return (
 		<div>
 			<InputGroup className='mb-3 w-[500px]'>
@@ -24,6 +27,7 @@ function FormTextExample() {
 					</InputGroup.Text>
 				</button>
 				<Form.Control
+					onChange={(e) => setInputDate(e.target.value)}
 					placeholder='Search'
 					ariaLabel='Search'
 					ariaDescribedby='basic-addon1'
