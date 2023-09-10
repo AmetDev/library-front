@@ -2,7 +2,8 @@ import {useEffect, useState} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import '../styles/App.css'
 import FormTextExample from './TextInput'
-
+import {useDispatch, useSelector} from "react-redux";
+import {fetchBooks, setSortType} from '../redux/slices/booksSlice'
 
 const categories = [
 	'all',
@@ -46,16 +47,21 @@ const Categories = () => {
 	)
 }
 const Sorting = () => {
-	const [currentSort, setCurrentSort] = useState('')
+	const { counter, sortType, searchValue, index } = useSelector(
+		state => state.book
+	)
+	const dispatch = useDispatch()
 	const [isClick, setIsClick] = useState(false)
-	const onClickSort = el => {
-		setCurrentSort(el)
-		setIsClick(true)
+	const onClickSort = (el) => {
+		dispatch(setSortType(el))
+		dispatch(fetchBooks({counter, searchValue, index, el}))
+
+
 	}
 	return (
 		<Dropdown>
 			<Dropdown.Toggle variant='success' id='dropdown-basic'>
-				{isClick ? currentSort : sortings[0]}
+				{sortType}
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
