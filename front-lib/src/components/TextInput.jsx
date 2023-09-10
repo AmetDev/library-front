@@ -1,25 +1,30 @@
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import {useEffect, useState} from "react";
-import {fetchBooks, setSearchValue} from '../redux/slices/booksSlice'
+import React, {useEffect, useState} from "react";
+import {fetchBooks, setSearchValue, setIndex, setClearBooks, setCounter} from '../redux/slices/booksSlice'
 import {useDispatch, useSelector} from "react-redux";
 function FormTextExample() {
 	const [inputDate, setInputDate] = useState('');
 	const dispatch = useDispatch();
-	console.log(inputDate)
-	const { books, counter, isLoading, error, searchValue } = useSelector(
+	const { books, counter, isLoading, error, searchValue, index, sortType } = useSelector(
 		state => state.book
 	)
 	const getDateInput = () => {
-			const func = async () => {
-				await dispatch(fetchBooks({counter, searchValue }))
+			const func = () => {
+
+				dispatch(setClearBooks())
+				dispatch(setIndex())
+				dispatch(setSearchValue(inputDate))
+				dispatch(setCounter())
+				dispatch(fetchBooks({counter, searchValue, index, sortType }))
+
 			}
 			func()
 
 	}
 	const onChangeText = (e) => {
 		setInputDate(e.target.value)
-		dispatch(setSearchValue(inputDate))
+
 	}
 	return (
 		<div>
@@ -44,7 +49,7 @@ function FormTextExample() {
 				</button>
 				<Form.Control
 					onChange={(e) => onChangeText(e)}
-					placeholder='Search'
+					placeholder='Search books'
 					ariaLabel='Search'
 					ariaDescribedby='basic-addon1'
 				/>
