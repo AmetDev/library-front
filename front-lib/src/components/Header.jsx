@@ -2,9 +2,11 @@ import {useEffect, useState} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import '../styles/App.css'
 import FormTextExample from './TextInput'
+import {useDispatch, useSelector} from "react-redux";
+import {setSortingType, setCategories} from '../redux/slices/booksSlice'
 
 
-const categories = [
+const categoriesArr = [
 	'all',
 	'art',
 	'biography',
@@ -15,22 +17,30 @@ const categories = [
 ]
 const sortings = ['relevance', 'newest']
 const Categories = () => {
-
+	const dispatch = useDispatch()
+	const {  categories } = useSelector(
+		state => state.book
+	)
 	const [currentCategories, setCurrentCategories] = useState('')
 	const [isClick, setIsClick] = useState(false)
+
 	const onClickCategories = el => {
+		console.log('catego', el)
 		setCurrentCategories(el)
 		setIsClick(true)
+		dispatch(setCategories(el))
+		console.log('cate555go', categories)
+
 	}
 
 	return (
 		<Dropdown>
 			<Dropdown.Toggle variant='success' id='dropdown-basic'>
-				{isClick ? currentCategories : categories[0]}
+				{isClick ? categories : categories[0]}
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
-				{categories.map(el => {
+				{categoriesArr.map(el => {
 					return (
 						<Dropdown.Item
 							href='#/action-1'
@@ -46,16 +56,22 @@ const Categories = () => {
 	)
 }
 const Sorting = () => {
-	const [currentSort, setCurrentSort] = useState('')
+	const dispatch = useDispatch()
 	const [isClick, setIsClick] = useState(false)
-	const onClickSort = el => {
-		setCurrentSort(el)
+	const {  sortvalue } = useSelector(
+		state => state.book
+	)
+	const onClickSort = (el) => {
+		console.log('sortings', el)
 		setIsClick(true)
+		dispatch(setSortingType(el))
+		console.log('sortings', sortvalue)
+
 	}
 	return (
 		<Dropdown>
 			<Dropdown.Toggle variant='success' id='dropdown-basic'>
-				{isClick ? currentSort : sortings[0]}
+				{sortvalue}
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
@@ -63,6 +79,7 @@ const Sorting = () => {
 					return (
 						<Dropdown.Item
 							href='#/action-1'
+
 							onClick={() => onClickSort(el)}
 							key={el}
 						>
