@@ -27,7 +27,7 @@ function FormTextExample() {
 	return (
 		<div>
 			<InputGroup className='mb-3 w-[500px]'>
-				<button onClick={() => getDateInput()}>
+				<button onClick={() => getDateInput(inputDate)}>
 					<InputGroup.Text id='basic-addon1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
