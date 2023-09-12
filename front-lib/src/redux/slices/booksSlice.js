@@ -3,11 +3,11 @@ import axios from 'axios'
 
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
-    async ({ counter, searchValue, index, el }) => {
+    async ({counter, searchValue, index, categories, sortvalue  }) => {
        try {
-           console.log('sortTYPE IN ASYNC',el)
+           console.log('sortTYPE IN ASYNC',sortvalue)
            const { data } = await axios.get(
-               'https://www.googleapis.com/books/v1/volumes?q='+`${!searchValue?'java':searchValue}`+`${!el?'&orderBy=relevance':'&orderBy='+el}`+`&maxResults=30`+`&startIndex=${index}`+'&key=AIzaSyBQRK-QOa7bfZoq9xESykT7B_ohlESGnO0'
+               'https://www.googleapis.com/books/v1/volumes?q='+`${!searchValue?'java':searchValue}`+`${!sortvalue?'&orderBy=relevance':'&orderBy='+sortvalue}`+`${!categories?'&subject=all':`&subject=${categories}`}`+`&maxResults=30`+`&startIndex=${index}`+'&key=AIzaSyBQRK-QOa7bfZoq9xESykT7B_ohlESGnO0'
 
            )
            console.log(data)
@@ -28,15 +28,19 @@ export const booksSLice = createSlice({
         counter: 10,
         searchValue: '',
         index: 0,
-        sortType: 'relevance',
+        sortvalue: '',
+        categories: '',
     },
     reducers: {
         setCounter(state) {
             state.counter += 1;
         },
-        setSortType(state, action) {
-            console.log(state.sortType)
-            state.sortType = action.payload;
+        setCategories(state, action) {
+            console.log('CATRGORY',state.categories)
+            state.categories = action.payload;
+        },
+        setSortingType(state, action) {
+            state.sortvalue = action.payload;
         },
         setClearBooks(state) {
             state.books = [];
@@ -65,4 +69,4 @@ export const booksSLice = createSlice({
             })
     },
 })
-export const { setCounter, setSearchValue, setIndex, setClearBooks,setSortType } = booksSLice.actions
+export const { setCounter, setSearchValue, setIndex, setClearBooks,setSortingType, setCategories } = booksSLice.actions

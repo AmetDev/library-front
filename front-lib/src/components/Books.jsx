@@ -5,13 +5,13 @@ import {fetchBooks, setClearBooks, setCounter, setIndex, setSortType} from '../r
 const Books = () => {
 	const [localBooks, setLocalBooks] = useState([])
 	const dispatch = useDispatch()
-	const { books, counter, isLoading, error, searchValue, index, sortType } = useSelector(
+	const { books, counter, isLoading, searchValue, index, categories, sortvalue } = useSelector(
 		state => state.book
 	)
 
 	useEffect(() => {
 		const func = async () => {
-			await dispatch(fetchBooks({ counter, searchValue, index }))
+			await dispatch(fetchBooks({counter, searchValue, index, categories, sortvalue }))
 		}
 		func()
 	}, [counter, searchValue, index ])
@@ -21,7 +21,7 @@ const Books = () => {
 		event.preventDefault()
 		dispatch(setIndex())
 		dispatch(setCounter())
-		dispatch(fetchBooks({ counter, searchValue, index }))
+		dispatch(fetchBooks({counter, searchValue, index, categories, sortvalue }))
 	}
 
 	const BooksRender = () => {

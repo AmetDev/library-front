@@ -6,20 +6,16 @@ import {useDispatch, useSelector} from "react-redux";
 function FormTextExample() {
 	const [inputDate, setInputDate] = useState('');
 	const dispatch = useDispatch();
-	const { books, counter, isLoading, error, searchValue, index, sortType } = useSelector(
+	const { books, counter, isLoading, error, searchValue, index, sortType, categories } = useSelector(
 		state => state.book
 	)
-	const getDateInput = () => {
-			const func = () => {
+	const getDateInput = (inputDate) => {
 
 				dispatch(setClearBooks())
 				dispatch(setIndex())
 				dispatch(setSearchValue(inputDate))
 				dispatch(setCounter())
-				dispatch(fetchBooks({counter, searchValue, index, sortType }))
-
-			}
-			func()
+				dispatch(fetchBooks({counter, searchValue, index, sortType, categories }))
 
 	}
 	const onChangeText = (e) => {
