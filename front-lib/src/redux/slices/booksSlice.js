@@ -70,3 +70,4 @@ export const booksSLice = createSlice({
     },
 })
 export const { setCounter, setSearchValue, setIndex, setClearBooks,setSortingType, setCategories } = booksSLice.actions
+

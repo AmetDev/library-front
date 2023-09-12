@@ -1,7 +1,9 @@
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+
 import React, {useEffect, useState} from "react";
 import {fetchBooks, setSearchValue, setIndex, setClearBooks, setCounter} from '../redux/slices/booksSlice'
+
 import {useDispatch, useSelector} from "react-redux";
 function FormTextExample() {
 	const [inputDate, setInputDate] = useState('');
@@ -17,10 +19,10 @@ function FormTextExample() {
 				dispatch(setCounter())
 				dispatch(fetchBooks({counter, searchValue, index, sortType, categories }))
 
+
 	}
 	const onChangeText = (e) => {
 		setInputDate(e.target.value)
-
 	}
 	return (
 		<div>
@@ -46,6 +48,7 @@ function FormTextExample() {
 				<Form.Control
 					onChange={(e) => onChangeText(e)}
 					placeholder='Search books'
+
 					ariaLabel='Search'
 					ariaDescribedby='basic-addon1'
 				/>
