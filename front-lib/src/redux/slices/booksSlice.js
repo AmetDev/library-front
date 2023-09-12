@@ -28,12 +28,16 @@ export const booksSLice = createSlice({
         counter: 10,
         searchValue: '',
         index: 0,
-        sortvalue: '',
-        categories: '',
+        sortvalue: 'relevance',
+        categories: 'all',
+        clickedElement: {},
     },
     reducers: {
         setCounter(state) {
             state.counter += 1;
+        },
+        setClickedElement(state, action) {
+            state.clickedElement = action.payload;
         },
         setCategories(state, action) {
             console.log('CATRGORY',state.categories)
@@ -69,5 +73,5 @@ export const booksSLice = createSlice({
             })
     },
 })
-export const { setCounter, setSearchValue, setIndex, setClearBooks,setSortingType, setCategories } = booksSLice.actions
+export const { setCounter, setSearchValue, setIndex, setClearBooks,setSortingType, setCategories, setClickedElement } = booksSLice.actions
 

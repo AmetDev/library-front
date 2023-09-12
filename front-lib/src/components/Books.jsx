@@ -1,8 +1,8 @@
 
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBooks, setClearBooks, setCounter, setIndex, setSortType} from '../redux/slices/booksSlice'
-
+import {fetchBooks, setClearBooks, setCounter, setIndex, setSortType, setClickedElement} from '../redux/slices/booksSlice'
+import { Link } from "react-router-dom"
 const Books = () => {
 	const [localBooks, setLocalBooks] = useState([])
 	const dispatch = useDispatch()
@@ -24,17 +24,26 @@ const Books = () => {
 		dispatch(setCounter())
 		dispatch(fetchBooks({counter, searchValue, index, categories, sortvalue }))
 	}
+	const currentClickedElement = (el1) => {
+		dispatch(setClickedElement(el1))
 
+	}
 	const BooksRender = () => {
 		return (
-			<>{books.map((el) => el.items.map((el1) => <div key={el1.id} className='m-[100px] w-12 h-[200px]'>
-				{!el1.volumeInfo.imageLinks? `sorry, we are don't find img :(`:<img src={el1.volumeInfo.imageLinks.thumbnail} alt={el1.volumeInfo.title}/>}
-				<h1>{el1.volumeInfo.title}</h1>
-			</div>) )}</>
+			<>{books.map((el) => el.items.map((el1) =>
+				<div key={el1.id} className='w-[250px] h-[370px] flex justify-content-center flex-col p-5 m-3 bg-gray-400 text-center'>
+				<Link to={`book/${el1.id}`} onClick={() => currentClickedElement(el1)}  className=''>
+					{!el1.volumeInfo.imageLinks? `sorry, we are don't find img :(`:<img className='w-[100px] h-[150px] ' src={el1.volumeInfo.imageLinks.thumbnail} alt={el1.volumeInfo.title}/>}
+					{!el1.volumeInfo.categories?<h3 className='text-decoration-underline m-2 text-white'>`sorry, we are don't find categories :(`</h3>:<h3 className='text-decoration-underline m-2 text-white'>{el1.volumeInfo.categories}</h3>}
+					{!el1.volumeInfo.authors?<h3 className=' m-2 text-cyan-950'>`sorry, we are don't find author :(`</h3>:<h3 className=' m-2 text-cyan-950'>{el1.volumeInfo.authors}</h3>}
+					<h1>{el1.volumeInfo.title}</h1>
+				</Link>
+				</div>)
+			)}</>
 		)
 	}
 	 return (
-		 <div className='grid grid-cols-3 m-5 '>
+		 <div className='grid grid-cols-3 m-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
 			 {
 				 isLoading ? <div>loading...</div> : <BooksRender/>
 			 }
