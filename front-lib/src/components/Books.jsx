@@ -43,7 +43,7 @@ const Books = () => {
 		)
 	}
 	 return (
-		 <div className='grid grid-cols-3 m-5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
+		 <div className='grid grid-cols-3 m-5 smm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
 			 {
 				 isLoading ? <div>loading...</div> : <BooksRender/>
 			 }

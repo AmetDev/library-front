@@ -11,7 +11,7 @@ const Router =  () => {
         <BrowserRouter>
         <Routes>
 
-                <Route path="/" element={ <div className='w-max-[1920px] flex justify-content-center flex-column'><Header /><Books/></div>}/>
+                <Route path="/" element={ <><Header /><Books/></>}/>
                 <Route path="book/:id" element={<><Header /><BookItem/></>}/>
                 <Route path='*' element={<div className="text-white">Not found!</div>}/>
 
