@@ -11,8 +11,8 @@ function FormTextExample() {
 	const { books, counter, isLoading, error, searchValue, index, sortType, categories } = useSelector(
 		state => state.book
 	)
-	const getDateInput = (inputDate) => {
-
+	const getDateInput = (e) => {
+				e.preventDefault()
 				dispatch(setClearBooks())
 				dispatch(setIndex())
 				dispatch(setSearchValue(inputDate))
@@ -24,10 +24,11 @@ function FormTextExample() {
 	const onChangeText = (e) => {
 		setInputDate(e.target.value)
 	}
+
 	return (
 		<div>
-			<InputGroup className='mb-3 w-[500px]'>
-				<button onClick={() => getDateInput(inputDate)}>
+			<InputGroup className='mb-3 w-[500px] smm:w-[190px] mt-3 md:w-[250px] lg:w-[350px]'>
+				<button onClick={(e) => getDateInput(e)} >
 					<InputGroup.Text id='basic-addon1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'

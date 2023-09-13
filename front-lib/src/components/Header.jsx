@@ -97,7 +97,7 @@ const Header = () => {
 			<h1>Search books</h1>
 			<FormTextExample />
 
-			<div className='flex space-x-[900px]'>
+			<div className='flex space-x-[700px] smm:space-x-[90px] smm:space-x-[100px] md:space-x-[400px]'>
 				<Categories />
 				<Sorting />
 			</div>
